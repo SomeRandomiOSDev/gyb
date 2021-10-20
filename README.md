@@ -22,7 +22,13 @@ This will download `gyb` to a local cache in the Derived Data folder for your pa
 
 To install to an Xcode project open your project's 'Package Dependencies' and add a remote package with the following URL: https://github.com/SomeRandomiOSDev/gyb
 
-This will download `dyb` to a local cache in the Derived Data folder for your project. You can now invoke it via `${BUILD_DIR}/../../SourcePackages/checkouts/gyb/gyb` in your Script Build Phase.
+This will download `dyb` to a local cache in the Derived Data folder for your project. You can now invoke it with the following script in your Script Build Phase:
+
+```bash
+DERIVED_DATA_DIR="$(dirname "$(dirname "$(xcodebuild -project "$PROJECT_FILE_PATH" -showBuildSettings | grep -m 1 "BUILD_DIR" | grep -oEi "\/.*")")")"
+
+"$DERIVED_DATA_DIR/SourcePackages/checkouts/gyb/gyb" <arguments>
+```
 
 ### CocoaPods
 
